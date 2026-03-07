@@ -33,16 +33,16 @@
             <div class="join">
                 <div>
                     <label class="input validator join-item">
-                        <input type="text" placeholder="Search issues.." required />
+                        <input id="search" type="text" placeholder="Search issues.." required />
                     </label>
                     <div class="validator-hint hidden"></div>
                 </div>
-                <button class="btn btn-primary join-item">+ New Issue</button>
+                <button id="khujteche" class="btn btn-primary join-item">+ New Issue</button>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-[80%] mx-auto mt-6">
+    <main class="max-w-[80%] mx-auto mt-6 pb-10">
 
         <!-- button section -->
         <section class="flex justify-start items-center bg-white rounded-lg p-4 gap-2 mb-4">
@@ -87,6 +87,10 @@
 
         <!-- close cards -->
         <section id="close-card-section"
+            class="grid [@media(max-width:767px)_and_(min-width:380px)]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+        </section>
+
+        <section id="search-card-section"
             class="grid [@media(max-width:767px)_and_(min-width:380px)]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
         </section>
 

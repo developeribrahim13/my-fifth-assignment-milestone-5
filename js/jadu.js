@@ -228,21 +228,26 @@ function toogle(id) {
     document.getElementById('all-card-section').classList.add('hidden');
     document.getElementById('open-card-section').classList.add('hidden');
     document.getElementById('close-card-section').classList.add('hidden');
+    document.getElementById('search-card-section').classList.add('hidden');
     if(id=='all')
         document.getElementById('all-card-section').classList.remove('hidden');
     else if(id=='open')
         document.getElementById('open-card-section').classList.remove('hidden');
-    else
+    else if(id=='close')
         document.getElementById('close-card-section').classList.remove('hidden');
+    else
+        document.getElementById('search-card-section').classList.remove('hidden');
 }
 
-
+// modal er jonno data collect korchi
 function mew (url){
     fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${url}`)
     .then(res => res.json())
     .then(dtls => displayModal(dtls.data))
 }
+// modal er jonno api theke data collect korchi
 
+// modal a display korchi
 function displayModal (elmnt) {
     console.log(elmnt);
     const modal = document.getElementById('my_modal_5');
@@ -291,19 +296,84 @@ function displayModal (elmnt) {
                 </div>
   `
 };
+// modal a display korchi
 
+// spinner feature add korar function
 function spinner (tf){
   if(tf==true){
-     document.getElementById('all-card-section').classList.add('hidden');
-    document.getElementById('open-card-section').classList.add('hidden');
-    document.getElementById('close-card-section').classList.add('hidden');
     document.getElementById('spinner').classList.remove('hidden');
   }
   else{
-        document.getElementById('all-card-section').classList.remove('hidden');
-        document.getElementById('open-card-section').classList.remove('hidden');
-        document.getElementById('close-card-section').classList.remove('hidden');
         document.getElementById('spinner').classList.add('hidden');
   }
-
 }
+// spinner feature add korar function
+
+
+// search buttone eventlistener add korchi
+document.getElementById('khujteche').addEventListener('click',(evnt)=>{
+    evnt.preventDefault();
+    const tottho = document.getElementById('search').value.trim().toLowerCase();
+    toogle('search')
+    totthoAno(tottho);
+});
+// search buttone eventlistener add korchi
+
+
+// search data api theke fetch korchi
+function totthoAno(url){
+    spinner(true);
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${url}`)
+    .then(rspns => rspns.json())
+    .then(data => displaySearch(data.data));
+}
+// search data api theke fetch korchi
+
+
+// search data display korchi
+function displaySearch(issues){
+    const searchSection = document.getElementById('search-card-section');
+    searchSection.innerHTML = "";
+    let kotore = 0;
+    issues.forEach(elmnt => {
+        const brdr = elmnt.status == "open" ? "border-green-500" : "border-purple-500";
+            kotore++;
+        searchSection.innerHTML += `
+        <div onclick="my_modal_5.showModal(),mew(${elmnt.id})" class="bg-white p-3 border-t-3 ${brdr} rounded-xl space-y-1.5 shadow-sm shadow-gray-400 ">
+                <div class="flex justify-between items-center">
+                ${elmnt.status == "open" ? `<img src="./assets/Open-Status.png">` : `<img src="./assets/Closed- Status .png">`}
+
+                ${elmnt.priority == "high" ? `<div class="text-red-500 bg-red-100 py-0.5 px-4 rounded-2xl text-sm font-medium">HIGH</div>
+                </div>`:
+                elmnt.priority == "medium" ? `<div class="text-amber-600 bg-amber-100 py-0.5 px-4 rounded-2xl text-sm font-medium">MEDIUM</div>
+                </div>`:
+                    `<div class="text-gray-500 bg-gray-100 py-0.5 px-4 rounded-2xl text-sm font-medium">LOW</div>
+                </div>` }
+
+                <h1 class="font-semibold clr-blck">${elmnt.title}</h1>
+
+                <p class="clr-drk text-[12px] font-normal">${elmnt.description}</p>
+
+                <div class="flex flex-wrap justify-start items-center gap-1">
+                ${elmnt.labels.map(el =>
+                        `<div class="${el == "bug" ? "bug" :
+                            el == "help wanted" ? "help" :
+                                el == "enhancement" ? "enhance" :
+                                    el == "documentation" ? "dcmnt" :
+                                        "good"} py-1 px-2 rounded-xl text-[12px] font-medium flex justify-center border items-center gap-0.5">${el == "bug" ? `<img src="./assets/BugDroid.png">` :
+                                            el == "help wanted" ? `<img src="./assets/Lifebuoy.png">` :
+                                                el == "enhancement" ? `<img src="./assets/Sparkle.png">` : ""} ${el.toUpperCase()}</div>`
+                    ).join("")}   
+                </div>
+
+                <hr class=" text-gray-200 my-3">
+
+                <p class="clr-drk text-[12px] ">#1 by <span>${elmnt.author}</span></p>
+                <p class="clr-drk text-[12px] ">${elmnt.createdAt}</p>
+            </div>
+        `    
+      document.getElementById('count').innerText = kotore;    
+    })
+    spinner(false);
+}
+// search data display korchi..
