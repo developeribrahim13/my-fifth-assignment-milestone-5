@@ -36,6 +36,7 @@ function signInKorchere() {
 // all card er datake collect korlam
 const pressAll = () => {
     toogle("all");
+    spinner(true);
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(res => res.json())
         .then(issue => displayAll(issue.data));
@@ -47,6 +48,7 @@ pressAll();
 // open card gulor jonno all data fetch korlam
 const pressOpen = () => {
     toogle("open");
+    spinner(true);
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(res => res.json())
         .then(issue => displayOpen(issue.data));
@@ -56,6 +58,7 @@ const pressOpen = () => {
 // closed card gulor jonno all data fetch korlam
 const pressClose = () => {
     toogle("close");
+    spinner(true);
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(res => res.json())
         .then(issue => displayClose(issue.data));
@@ -106,6 +109,7 @@ const displayAll = (issues) => {
             </div>
         `
     });
+    spinner(false)
 }
 //  all card display korlam
 
@@ -155,6 +159,7 @@ const displayOpen = (issues) => {
         }
       document.getElementById('count').innerText = kotore;    
     })
+    spinner(false);
 }
 // open cardguloke display korechi
 
@@ -206,6 +211,7 @@ const displayClose = (issues) => {
         }
       document.getElementById('count').innerText = kotore;    
     })
+    spinner(false);
 }
 // close cardguloke display korechi
 
@@ -283,5 +289,21 @@ function displayModal (elmnt) {
                         </form>
                     </div>
                 </div>
-    `
+  `
 };
+
+function spinner (tf){
+  if(tf==true){
+     document.getElementById('all-card-section').classList.add('hidden');
+    document.getElementById('open-card-section').classList.add('hidden');
+    document.getElementById('close-card-section').classList.add('hidden');
+    document.getElementById('spinner').classList.remove('hidden');
+  }
+  else{
+        document.getElementById('all-card-section').classList.remove('hidden');
+        document.getElementById('open-card-section').classList.remove('hidden');
+        document.getElementById('close-card-section').classList.remove('hidden');
+        document.getElementById('spinner').classList.add('hidden');
+  }
+
+}
