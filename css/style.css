@@ -9,3 +9,33 @@
  .clr-blck {
      color: #1F2937;
  }
+
+ .bug{
+    color:#EF4444;
+    background-color: #FEE2E2;
+    border-color: #FECACA;
+ }
+
+ .help{
+    color:#D97706;
+    background-color: #FEF3C7;
+    border-color: #FDE68A;
+ }
+
+ .enhance{
+    color: #16A34A;
+    background-color: #DCFCE7;
+    border-color: #BBF7D0;
+ }
+
+ .dcmnt{
+    color: #7C3AED;
+    background-color: #EDE9FE;
+    border-color: #DDD6FE;
+ }
+
+ .good{
+    color: #0284C7;
+    background-color: #E0F2FE;
+    border-color: #90CDF4;
+ }

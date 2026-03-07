@@ -51,26 +51,33 @@ const displayAll = (issues) => {
     const allSection = document.getElementById('all-card-section');
     allSection.innerHTML = "";
     issues.forEach(elmnt => {
-        const brdr = elmnt.status == "open"? "border-green-500":"border-purple-500";
+        const brdr = elmnt.status == "open" ? "border-green-500" : "border-purple-500";
         allSection.innerHTML += `
-        <div class="bg-white p-3 border-t-3 ${brdr} rounded-xl space-y-1 shadow-sm shadow-gray-400">
+        <div class="bg-white p-3 border-t-3 ${brdr} rounded-xl space-y-1.5 shadow-sm shadow-gray-400 ">
                 <div class="flex justify-between items-center">
                 ${elmnt.status == "open" ? `<img src="./assets/Open-Status.png">` : `<img src="./assets/Closed- Status .png">`}
 
                 ${elmnt.priority == "high" ? `<div class="text-red-500 bg-red-100 py-0.5 px-4 rounded-2xl text-sm font-medium">HIGH</div>
                 </div>`:
-                  elmnt.priority == "medium"?`<div class="text-amber-600 bg-amber-100 py-0.5 px-4 rounded-2xl text-sm font-medium">MEDIUM</div>
+                elmnt.priority == "medium" ? `<div class="text-amber-600 bg-amber-100 py-0.5 px-4 rounded-2xl text-sm font-medium">MEDIUM</div>
                 </div>`:
-                 `<div class="text-gray-500 bg-gray-100 py-0.5 px-4 rounded-2xl text-sm font-medium">LOW</div>
+                    `<div class="text-gray-500 bg-gray-100 py-0.5 px-4 rounded-2xl text-sm font-medium">LOW</div>
                 </div>` }
 
                 <h1 class="font-semibold clr-blck">${elmnt.title}</h1>
 
                 <p class="clr-drk text-[12px] font-normal">${elmnt.description}</p>
 
-                <div class="flex justify-start items-center gap-1">
-                    <div class="text-red-500 bg-red-100 border border-red-200 py-1 px-2 rounded-xl text-[12px] font-medium flex justify-center items-center gap-0.5"><img src="./assets/BugDroid.png"> BUG</div>
-                    <div class="text-amber-600 bg-amber-100 border border-amber-200 py-1 px-2 rounded-xl text-[12px] font-medium flex justify-center items-center gap-0.5"><img src="./assets/Lifebuoy.png"> HELP WANTED</div> 
+                <div class="flex flex-wrap justify-start items-center gap-1">
+                ${elmnt.labels.map(el =>
+                        `<div class="${el == "bug" ? "bug" :
+                            el == "help wanted" ? "help" :
+                                el == "enhancement" ? "enhance" :
+                                    el == "documentation" ? "dcmnt" :
+                                        "good"} py-1 px-2 rounded-xl text-[12px] font-medium flex justify-center border items-center gap-0.5">${el == "bug" ? `<img src="./assets/BugDroid.png">` :
+                                            el == "help wanted" ? `<img src="./assets/Lifebuoy.png">` :
+                                                el == "enhancement" ? `<img src="./assets/Sparkle.png">` : ""} ${el.toUpperCase()}</div>`
+                    ).join("")}   
                 </div>
 
                 <hr class=" text-gray-200 my-3">
@@ -85,9 +92,9 @@ const displayAll = (issues) => {
 
 
 // button toogle korar jonno
-function toogle (id) {
-    document.getElementById('all').classList.remove('bg-blue-700','text-white');
-    document.getElementById('open').classList.remove('bg-blue-700','text-white');
-    document.getElementById('close').classList.remove('bg-blue-700','text-white');
-    document.getElementById(id).classList.add('bg-blue-700','text-white');
+function toogle(id) {
+    document.getElementById('all').classList.remove('bg-blue-700', 'text-white');
+    document.getElementById('open').classList.remove('bg-blue-700', 'text-white');
+    document.getElementById('close').classList.remove('bg-blue-700', 'text-white');
+    document.getElementById(id).classList.add('bg-blue-700', 'text-white');
 }
