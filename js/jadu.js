@@ -222,6 +222,7 @@ function toogle(id) {
     document.getElementById('all').classList.remove('bg-blue-700', 'text-white');
     document.getElementById('open').classList.remove('bg-blue-700', 'text-white');
     document.getElementById('close').classList.remove('bg-blue-700', 'text-white');
+    if(id!='search')
     document.getElementById(id).classList.add('bg-blue-700', 'text-white');
     
     
@@ -332,9 +333,19 @@ function totthoAno(url){
 
 // search data display korchi
 function displaySearch(issues){
+    document.getElementById('search').value = "";
     const searchSection = document.getElementById('search-card-section');
     searchSection.innerHTML = "";
     let kotore = 0;
+    if(issues.length == 0)
+        {
+            searchSection.innerHTML = `
+            <p class="text-red-700 font-extra-bold text-5xl col-span-4 text-center">কোনো কিছু পাওয়া যায়নি!</p>
+            `;
+            document.getElementById('count').innerText = kotore;
+            spinner(false);
+            return;
+        }
     issues.forEach(elmnt => {
         const brdr = elmnt.status == "open" ? "border-green-500" : "border-purple-500";
             kotore++;
